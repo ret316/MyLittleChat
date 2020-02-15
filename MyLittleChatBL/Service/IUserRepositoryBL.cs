@@ -9,6 +9,7 @@ namespace MyLittleChatBL.Service
 {
     public interface IUserRepositoryBL
     {
-        Task<UserBL> GetUser();
+        Task<UserBL> GetUser(string login);
+        Task CreateUser(UserBL userBL);
     }
 }

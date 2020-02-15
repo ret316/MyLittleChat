@@ -1,4 +1,5 @@
 ﻿using MyLittleChat.Model;
+using MyLittleChatBL.Model;
 using MyLittleChatBL.Service;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,20 @@ namespace MyLittleChat.Service.Implementation
             this.userRepositoryBL = userRepositoryBL;
         }
 
-        public async Task<User> GetUser()
+        public async Task CreateUser(User user)
         {
-            var userDto = await this.userRepositoryBL.GetUser();
+            await this.userRepositoryBL.CreateUser(new UserBL 
+            { 
+                id = user.id, 
+                login = user.login, 
+                name = user.name, 
+                password = new MD5Hash().GetHash(user.password) 
+            });
+        }
+
+        public async Task<User> GetUser(string login)
+        {
+            var userDto = await this.userRepositoryBL.GetUser(login);
 
             return new User
             {

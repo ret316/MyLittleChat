@@ -8,6 +8,7 @@ namespace MyLittleChat.Service
 {
     public interface IUserRepository
     {
-        Task<User> GetUser();
+        Task<User> GetUser(string login);
+        Task CreateUser(User user);
     }
 }
