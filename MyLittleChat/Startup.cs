@@ -29,10 +29,10 @@ namespace MyLittleChat
         {
             services.AddSignalR();
 
-            string connectionString = "";
 
             services.AddBusinessLayerCollection();
-            services.AddDataLayerCollection(connectionString);
+            services.AddDataLayerCollection();
+            services.Configure<Settings>(Configuration.GetSection("ConnectionStrings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -9,15 +9,17 @@ namespace MyLittleChatDL
     public class ApplicationContext : DbContext
     {
         public DbSet<UserDL> Users { get; set; }
+        private readonly string connectionString;
 
-        public ApplicationContext()
+        public ApplicationContext(string connectionString)
         {
+            this.connectionString = connectionString;
             Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=ChatDB;Username=postgres;Password=isa");
+            optionsBuilder.UseNpgsql(connectionString);
         }
     }
 }

@@ -5,14 +5,20 @@ using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace MyLittleChatDL.Service.Implementation
 {
-    public class UserRepositoryDL : IUserRepositoryDL
+    public class UserRepositoryDL : BaseRepository, IUserRepositoryDL 
     {
+        public UserRepositoryDL(IOptions<Settings> options) : base(options)
+        {
+
+        }
+
         public async Task CreateUser(UserDL userDL)
         {
-            using (ApplicationContext db = new ApplicationContext())
+            using (ApplicationContext db = GetApplicationContext())
             {
                 await db.Users.AddAsync(userDL);
                 await db.SaveChangesAsync();
@@ -21,16 +27,9 @@ namespace MyLittleChatDL.Service.Implementation
 
         public async Task<UserDL> GetUser(string login)
         {
-            using (ApplicationContext db = new ApplicationContext())
+            using (ApplicationContext db = GetApplicationContext())
             {
                 var userDto = db.Users.Where(user => user.login == login).FirstOrDefaultAsync();
-                //return new UserDL
-                //{
-                //    id = userDto.id,
-                //    login = userDto.login,
-                //    password = userDto.password,
-                //    name = userDto.name
-                //};
                 return await userDto;
             }
         }

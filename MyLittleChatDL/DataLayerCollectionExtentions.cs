@@ -9,9 +9,8 @@ namespace MyLittleChatDL
 {
     public static class DataLayerCollectionExtentions
     {
-        public static IServiceCollection AddDataLayerCollection(this IServiceCollection services, string connectionString)
+        public static IServiceCollection AddDataLayerCollection(this IServiceCollection services)
         {
-            //services.AddTransient<IRepository, Repository>(provider => new Repository(connectionString));
             services.AddTransient<IUserRepositoryDL, UserRepositoryDL>();
             return services;
         }
