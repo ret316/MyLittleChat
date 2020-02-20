@@ -52,11 +52,26 @@
 
         });
 
-        // установка имени пользователя
+        document.getElementById("registerBtn").addEventListener("click", function (e) {
+            userName = document.getElementById("userName").value;
+            let password = document.getElementById("password").value;
+            hubConnection.invoke('Register', userName, password);
+            //document.getElementById("header").innerHTML = '<h3>Welcome ' + userName + '</h3>';
+        });
+
         document.getElementById("loginBtn").addEventListener("click", function (e) {
             userName = document.getElementById("userName").value;
-            document.getElementById("header").innerHTML = '<h3>Welcome ' + userName + '</h3>';
+            let password = document.getElementById("password").value;
+            hubConnection.invoke('Login', userName, password);
+            //document.getElementById("header").innerHTML = '<h3>Welcome ' + userName + '</h3>';
         });
+
+
+        // установка имени пользователя
+        //document.getElementById("loginBtn").addEventListener("click", function (e) {
+        //    userName = document.getElementById("userName").value;
+        //    document.getElementById("header").innerHTML = '<h3>Welcome ' + userName + '</h3>';
+        //});
         // отправка сообщения на сервер
         document.getElementById("sendBtn").addEventListener("click", function (e) {
             let message = document.getElementById("message").value;

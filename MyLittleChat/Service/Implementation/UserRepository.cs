@@ -23,7 +23,7 @@ namespace MyLittleChat.Service.Implementation
                 id = user.id, 
                 login = user.login, 
                 name = user.name, 
-                password = new MD5Hash().GetHash(user.password) 
+                password = user.password
             });
         }
 

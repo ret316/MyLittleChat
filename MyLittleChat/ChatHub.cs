@@ -12,5 +12,17 @@ namespace MyLittleChat
         {
             await Clients.All.SendAsync("Send", message, userName);
         }
+
+
+        public async Task Login(string userName, string password)
+        {
+            
+        }
+
+        public async Task Register(string userName, string password)
+        {
+            
+        }
+
     }
 }
