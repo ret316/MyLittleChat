@@ -52,11 +52,20 @@
 
         });
 
+        hubConnection.on('Login', function (userName, password) {
+
+
+        });
+
+        hubConnection.on('Register', function (userName, password) {
+
+
+        });
+
         document.getElementById("registerBtn").addEventListener("click", function (e) {
             userName = document.getElementById("userName").value;
             let password = document.getElementById("password").value;
             hubConnection.invoke('Register', userName, password);
-            //document.getElementById("header").innerHTML = '<h3>Welcome ' + userName + '</h3>';
         });
 
         document.getElementById("loginBtn").addEventListener("click", function (e) {
