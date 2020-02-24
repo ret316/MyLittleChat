@@ -12,15 +12,9 @@ namespace MyLittleChat.Service.Implementation
 
         public Guid GetGuid(string password)
         {
-            Guid GetHashAndSalt(Guid pass, Guid salt)
-            {
-                return Guid.NewGuid();
-            }
-
             string salt = "omaewamoushindeiru";
-            Guid guidPassword = Guid.Parse(GetHash(password));
-            Guid guidSatl = Guid.Parse(GetHash(salt));
-            return GetHashAndSalt(guidPassword, guidSatl);
+            Guid passwordGuid = Guid.Parse(GetHash(GetHash(password) + salt));
+            return passwordGuid;
         }
 
 
