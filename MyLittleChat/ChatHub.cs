@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using MyLittleChat.Model;
+using MyLittleChat.Service;
+using MyLittleChat.Service.Implementation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +11,12 @@ namespace MyLittleChat
 {
     public class ChatHub : Hub
     {
+        private IUserRepository userRepository { get; set; }
+        public ChatHub(IUserRepository userRepository)
+        {
+            this.userRepository = userRepository;
+        }
+
         public async Task Send(string message, string userName)
         {
             await Clients.All.SendAsync("Send", message, userName);
@@ -16,12 +25,32 @@ namespace MyLittleChat
 
         public async Task Login(string userName, string password)
         {
-
+            User user = await userRepository.GetUser(userName);
+            if (user.login != null)
+            {
+                await Groups.AddToGroupAsync(Context.ConnectionId, "ChatHub");
+                await Clients.Caller.SendAsync("SetUserName", user.name.ToString());
+            }
+            else
+                await Clients.Caller.SendAsync("UserNotFound");
         }
 
-        public async Task Register(string userName, string password)
+        public async Task Register(string login, string password, string name)
         {
-            
+            User user = new User();
+            user.login = login;
+            user.name = name;
+            user.password = new MD5Hash().GetGuid(password);
+            try
+            {
+                await userRepository.CreateUser(user);
+                await Clients.Caller.SendAsync("Registered", login, name);
+            }
+            catch (Exception)
+            {
+                await Clients.Caller.SendAsync("LoginIsDefined");
+            }
+                
         }
 
     }
