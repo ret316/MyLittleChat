@@ -52,12 +52,14 @@
 
         });
 
-        hubConnection.on('Login', function (userName, password) {
 
+
+        hubConnection.on('UserNotFound', function () {
+           
 
         });
 
-        hubConnection.on('Register', function (userName, password) {
+        hubConnection.on('Registered', function () {
 
 
         });

@@ -11,6 +11,7 @@ namespace MyLittleChat
 {
     public class ChatHub : Hub
     {
+        private Dictionary<string, User> connectedUsers { get; set; } = new Dictionary<string, User>();
         private IUserRepository userRepository { get; set; }
         public ChatHub(IUserRepository userRepository)
         {
@@ -19,7 +20,11 @@ namespace MyLittleChat
 
         public async Task Send(string message, string userName)
         {
-            await Clients.All.SendAsync("Send", message, userName);
+            if (connectedUsers.ContainsKey(Context.ConnectionId))
+            {
+                await Clients.All.SendAsync("Send", message, userName);
+            }
+            
         }
 
 
@@ -28,8 +33,9 @@ namespace MyLittleChat
             User user = await userRepository.GetUser(userName);
             if (user.login != null)
             {
+                connectedUsers[Context.ConnectionId] = user;
                 await Groups.AddToGroupAsync(Context.ConnectionId, "ChatHub");
-                await Clients.Caller.SendAsync("SetUserName", user.name.ToString());
+                //await Clients.Caller.SendAsync("SetUserName", user.name.ToString());
             }
             else
                 await Clients.Caller.SendAsync("UserNotFound");
