@@ -22,10 +22,10 @@ namespace MyLittleChatBL.Service.Implementation
             await this.userRepositoryDL.CreateUser
                 (new UserDL 
                 { 
-                    id = userBL.id,
-                    login = userBL.login,
-                    password = userBL.password,
-                    name = userBL.name
+                    Id = userBL.Id,
+                    Login = userBL.Login,
+                    Password = userBL.Password,
+                    Name = userBL.Name
                 });
         }
 
@@ -35,10 +35,10 @@ namespace MyLittleChatBL.Service.Implementation
 
             return new UserBL
             {
-                id = userDto.id,
-                login = userDto.login,
-                password = userDto.password,
-                name = userDto.name
+                Id = userDto.Id,
+                Login = userDto.Login,
+                Password = userDto.Password,
+                Name = userDto.Name
             };
         }
     }

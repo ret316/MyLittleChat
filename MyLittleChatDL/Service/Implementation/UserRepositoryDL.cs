@@ -29,7 +29,7 @@ namespace MyLittleChatDL.Service.Implementation
         {
             using (ApplicationContext db = GetApplicationContext())
             {
-                var userDto = db.Users.Where(user => user.login == login).FirstOrDefaultAsync();
+                var userDto = db.Users.Where(user => user.Login == login).FirstOrDefaultAsync();
                 return await userDto;
             }
         }

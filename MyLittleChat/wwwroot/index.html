@@ -21,7 +21,7 @@
 
     <div id="header"></div><br />
 
-    <div id="inputForm">
+    <div id="inputForm" style="display: none">
         <input type="text" id="message" />
         <input type="button" id="sendBtn" value="Отправить" />
     </div>
@@ -53,9 +53,11 @@
         });
 
 
+        //hubConnection.on("")
+
 
         hubConnection.on('UserNotFound', function () {
-           
+            document.getElementById("header").innerHTML = '<h3> user not found</h3>';
 
         });
 

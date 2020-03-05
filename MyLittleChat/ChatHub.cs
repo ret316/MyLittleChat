@@ -30,23 +30,33 @@ namespace MyLittleChat
 
         public async Task Login(string userName, string password)
         {
-            User user = await userRepository.GetUser(userName);
-            if (user.login != null)
+            try
             {
-                connectedUsers[Context.ConnectionId] = user;
-                await Groups.AddToGroupAsync(Context.ConnectionId, "ChatHub");
-                //await Clients.Caller.SendAsync("SetUserName", user.name.ToString());
+                User user = new User();
+                user = await userRepository.GetUser(userName);
+                if (user.Login != null)
+                {
+                    connectedUsers[Context.ConnectionId] = user;
+                    await Groups.AddToGroupAsync(Context.ConnectionId, "ChatHub");
+                    //await Clients.Caller.SendAsync("SetUserName", user.Name.ToString());
+                }
+                else
+                    await Clients.Caller.SendAsync("UserNotFound");
             }
-            else
-                await Clients.Caller.SendAsync("UserNotFound");
+            catch (Exception ex)
+            {
+
+            }
+
+
         }
 
         public async Task Register(string login, string password, string name)
         {
             User user = new User();
-            user.login = login;
-            user.name = name;
-            user.password = new MD5Hash().GetGuid(password);
+            user.Login = login;
+            user.Name = name;
+            user.Password = new MD5Hash().GetGuid(password);
             try
             {
                 await userRepository.CreateUser(user);

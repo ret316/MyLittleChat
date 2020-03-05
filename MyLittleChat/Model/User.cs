@@ -9,15 +9,15 @@ namespace MyLittleChat.Model
     public class User
     {
         [Key]
-        public int id { get; set; }
+        public int Id { get; set; }
         [Required]
         [StringLength(50, MinimumLength = 3)]
-        public string login { get; set; }
+        public string Login { get; set; }
         [Required]
         [DataType(DataType.Password)]
-        public Guid password { get; set; }
+        public Guid Password { get; set; }
         [Required]
         [StringLength(500, MinimumLength = 3)]
-        public string name { get; set; }
+        public string Name { get; set; }
     }
 }
